@@ -1,0 +1,100 @@
+name: Build GuardianShield Installer
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Windows Installer
+    runs-on: windows-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Verify project
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "GuardianShield.csproj")) {
+            Write-Error "GuardianShield.csproj was not found."
+            exit 1
+          }
+
+          if (-not (Test-Path "installer\GuardianShield.iss")) {
+            Write-Error "installer\GuardianShield.iss was not found."
+            exit 1
+          }
+
+      - name: Restore
+        run: dotnet restore GuardianShield.csproj
+
+      - name: Publish GuardianShield
+        run: >
+          dotnet publish GuardianShield.csproj
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=false
+          -o "${{ github.workspace }}\publish"
+
+      - name: Verify application
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "publish\GuardianShield.exe")) {
+            Write-Error "GuardianShield.exe was not created."
+            exit 1
+          }
+
+          Write-Host "GuardianShield.exe created successfully."
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: |
+          choco install innosetup --no-progress -y
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          New-Item `
+            -ItemType Directory `
+            -Force `
+            -Path "installer\output" | Out-Null
+
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" `
+            "installer\GuardianShield.iss"
+
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Inno Setup failed."
+            exit $LASTEXITCODE
+          }
+
+      - name: Verify installer
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "installer\output\GuardianShield-Setup.exe")) {
+            Write-Error "GuardianShield-Setup.exe was not created."
+            exit 1
+          }
+
+          Write-Host "GuardianShield-Setup.exe created successfully."
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: GuardianShield-Setup
+          path: installer/output/GuardianShield-Setup.exe
+          if-no-files-found: error
