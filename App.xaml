@@ -1,0 +1,19 @@
+<Application
+    x:Class="GuardianShield.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Application.Resources>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#17243B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2D4165"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+    </Application.Resources>
+
+</Application>
