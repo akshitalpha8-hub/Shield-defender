@@ -1,0 +1,229 @@
+<Window
+    x:Class="GuardianShield.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="GuardianShield"
+    Width="1200"
+    Height="780"
+    WindowStartupLocation="CenterScreen"
+    Background="#070C15"
+    Foreground="#EAF2FF">
+
+    <Grid Margin="24">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="245"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Grid.Column="0"
+            Background="#0D1626"
+            CornerRadius="22"
+            Padding="16">
+
+            <StackPanel>
+
+                <TextBlock
+                    Text="GuardianShield"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Margin="5,8,5,35"/>
+
+                <TextBlock
+                    Text="PROTECTION CENTER"
+                    Foreground="#7D8CA8"
+                    FontSize="11"
+                    Margin="8,0,0,10"/>
+
+                <Button
+                    Content="Dashboard"
+                    Click="Dashboard_Click"/>
+
+                <Button
+                    Content="Quick Scan"
+                    Click="QuickScan_Click"/>
+
+                <Button
+                    Content="Deep Scan"
+                    Click="DeepScan_Click"/>
+
+                <Button
+                    Content="Quarantine"
+                    Click="Quarantine_Click"/>
+
+                <Button
+                    Content="Settings"
+                    Click="Settings_Click"/>
+
+                <Separator Margin="4,24"/>
+
+                <TextBlock
+                    Text="REAL-TIME MONITOR"
+                    Foreground="#7D8CA8"
+                    FontSize="11"
+                    Margin="8,8"/>
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    Margin="8,10">
+
+                    <ToggleButton
+                        x:Name="MonitorToggle"
+                        Content="OFF"
+                        Width="70"
+                        Click="MonitorToggle_Click"/>
+
+                    <TextBlock
+                        x:Name="MonitorStatus"
+                        Text="Monitoring disabled"
+                        VerticalAlignment="Center"
+                        Margin="8,0"/>
+
+                </StackPanel>
+
+                <TextBlock
+                    Text="UPDATE CHANNEL"
+                    Foreground="#7D8CA8"
+                    FontSize="11"
+                    Margin="8,18,8,4"/>
+
+                <TextBlock
+                    x:Name="UpdateText"
+                    Text="Manual release channel"
+                    Foreground="#8FA0BB"
+                    Margin="8"/>
+
+            </StackPanel>
+
+        </Border>
+
+        <Grid
+            Grid.Column="1"
+            Margin="28,0,0,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+
+                <TextBlock
+                    Text="Protection dashboard"
+                    FontSize="32"
+                    FontWeight="Bold"/>
+
+                <TextBlock
+                    Text="Local scanning | hashing | safe quarantine | monitoring"
+                    Foreground="#8492AE"
+                    Margin="0,5,0,20"/>
+
+            </StackPanel>
+
+            <Border
+                Grid.Row="1"
+                Background="#101B2E"
+                CornerRadius="20"
+                Padding="22"
+                Margin="0,0,0,18">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="230"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel>
+
+                        <TextBlock
+                            Text="SYSTEM HEALTH"
+                            Foreground="#8190AB"
+                            FontSize="11"/>
+
+                        <TextBlock
+                            x:Name="HealthText"
+                            Text="Protected"
+                            FontSize="30"
+                            FontWeight="Bold"
+                            Margin="0,5"/>
+
+                        <TextBlock
+                            x:Name="StatusText"
+                            Text="Ready to scan."
+                            Foreground="#9BA9C1"/>
+
+                    </StackPanel>
+
+                    <Button
+                        Grid.Column="1"
+                        Content="START QUICK SCAN"
+                        Height="54"
+                        Click="QuickScan_Click"/>
+
+                </Grid>
+
+            </Border>
+
+            <Border
+                Grid.Row="2"
+                Background="#0D1626"
+                CornerRadius="20"
+                Padding="22">
+
+                <StackPanel>
+
+                    <TextBlock
+                        Text="Security activity"
+                        FontSize="20"
+                        FontWeight="SemiBold"/>
+
+                    <TextBlock
+                        x:Name="StatsText"
+                        Text="Files: 0   Threats: 0"
+                        Foreground="#8E9DB8"
+                        Margin="0,5,0,12"/>
+
+                    <TextBox
+                        x:Name="LogBox"
+                        Height="320"
+                        IsReadOnly="True"
+                        Background="#080E19"
+                        Foreground="#B7C7E1"
+                        BorderThickness="0"
+                        Padding="12"
+                        TextWrapping="Wrap"/>
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="0,15,0,0">
+
+                        <Button
+                            Content="Select folder"
+                            Click="SelectFolder_Click"/>
+
+                        <Button
+                            Content="Open quarantine"
+                            Click="Quarantine_Click"/>
+
+                        <Button
+                            Content="Clear log"
+                            Click="ClearLog_Click"/>
+
+                        <Button
+                            Content="Check updates"
+                            Click="CheckUpdates_Click"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+
+    </Grid>
+
+</Window>
